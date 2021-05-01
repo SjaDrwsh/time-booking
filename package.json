@@ -11,6 +11,8 @@
     "@types/jest": "^26.0.22",
     "@types/node": "^12.0.0",
     "@types/react-dom": "16.9.9",
+    "classnames": "^2.3.1",
+    "core-js": "3.6.5",
     "css-loader": "^5.2.4",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
@@ -20,12 +22,16 @@
     "jest-html-reporter": "^3.3.0",
     "jest-localstorage-mock": "^2.4.10",
     "mini-css-extract-plugin": "^0.10.0",
+    "mobx": "4.11.0",
+    "mobx-react": "6.1.4",
     "pepjs": "^0.5.3",
     "postcss-loader": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.4",
     "reflect-metadata": "^0.1.13",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.3",
     "timezone-mock": "^1.1.4",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
@@ -58,6 +64,6 @@
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
-    "@types/react": "16.9.46"
+    "@types/react": "16.9.19"
   }
 }

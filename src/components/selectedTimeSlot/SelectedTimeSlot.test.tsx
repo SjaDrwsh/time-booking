@@ -1,6 +1,6 @@
-import { ScooterParsing, ScooterPayloadErrorInput, ScooterPayloadInput } from './ScooterParsing';
+import { ScooterParsing, ScooterPayloadErrorInput, ScooterPayloadInput } from './SelectedTimeSlot';
 
-describe('test ScooterParsing functions', ()=> {
+describe('test SelectedTimeSlot', ()=> {
   const scooterParsing = new ScooterParsing({});
   const mockData = ' +IN,DeviceInfo,860861040012976,86,5600,2021-01-14T15:05:10,0035$ AABBAA +IN,DeviceInfo,860861040012975,34,5612,2021-01-14T18:30:10,0036$ CCDDEE +IN,DeviceInfo,860861040012974,3,5623,2021-01-14T23:59:10,0037$ FFGGHH ';
 

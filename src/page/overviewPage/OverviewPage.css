@@ -1,0 +1,13 @@
+.overviewPage {
+    width: 80%;
+    margin: 2rem auto;
+    text-align: center;
+    border: solid .2px grey;
+    padding: 2rem;
+}
+
+.overviewPage .box{
+    border: solid .2px grey;
+    background: lightgrey; 
+    padding: 1rem;
+}

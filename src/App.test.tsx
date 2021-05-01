@@ -1,6 +1,6 @@
 import App from './App';
 import { mount } from 'enzyme';
-import { OverviewPage } from './components/overviewPage/OverviewPage';
+import { OverviewPage } from './page/overviewPage/OverviewPage';
 import React from 'react';
 
 describe('test App', ()=> {

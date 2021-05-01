@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { OverviewPage } from './components/overviewPage/OverviewPage'
+import { OverviewPage } from './page/overviewPage/OverviewPage'
 
 function App() {
   return (
