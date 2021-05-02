@@ -17,6 +17,7 @@
 .select-time-slot .row > div{
     display: inline-grid;
     width: -webkit-fill-available;
+    min-width: 10rem;
 }
 
 .select-time-slot .ui.disabled.segment {

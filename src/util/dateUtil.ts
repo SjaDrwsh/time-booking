@@ -26,8 +26,8 @@ export function groupByDay(timeSlotsArray: SelectedDates[]): groupedDates{
     for (const key in daysObject) {
         daysObject[key] = sortDates(daysObject[key]);
     }
-    return daysObject;
 
+    return daysObject;
 }
 
 export function sortDates(dates: TimeSlotData[]): TimeSlotData[]{
@@ -46,41 +46,19 @@ export function mapSelectedTimeSlots(availableTimeSlots: SelectedDates[], select
         return groupByDay(availableTimeSlots);
     }
 
-
-    // reset all before checking if available time slot is within a booked time
-    availableTimeSlots.map((availableTimeSlot)=> {
-        return availableTimeSlot.selected = false;
-    })
-
-    const bookedTime = convertObjectIntoArray(selectedDates);
-
-    // // loop over selected time slots
-    // bookedTime.map((selectedTimeSlot)=> {
-    //     // loop over available time slots and add selected flag if within the range of booked time slots 
-    //     return availableTimeSlots.map((availableTimeSlot)=> {
-    //         if(availableTimeSlot.start_time >= selectedTimeSlot.start_time && availableTimeSlot.start_time < selectedTimeSlot.end_time ){
-    //             console.log(new Date(availableTimeSlot.start_time).getDay())
-    //             return availableTimeSlot.selected = true;
-    //         }
-    //         return availableTimeSlot.selected = false;
-    //     })
-    // })
-
-    // loop over available time slots and add selected flag if within the range of booked time slots 
-    availableTimeSlots.map((availableTimeSlot)=> {
-        return bookedTime.map((selectedTimeSlot)=> {
-    console.log('selectedTimeSlot', selectedTimeSlot)
+    const bookedTimeSlots = convertObjectIntoArray(selectedDates); 
+ 
+    for (const availableTimeSlot of availableTimeSlots) {
+        for (const selectedTimeSlot of bookedTimeSlots) {
             // eslint-disable-next-line
-            if(availableTimeSlot.start_time >= selectedTimeSlot.start_time && availableTimeSlot.start_time < selectedTimeSlot.end_time || 
-                (availableTimeSlot.end_time>selectedTimeSlot.start_time && availableTimeSlot.end_time <selectedTimeSlot.end_time) ){
-                console.log(new Date(availableTimeSlot.start_time).getDay())
-                return availableTimeSlot.selected = true;
-            }
-            return availableTimeSlot.selected = false;
-        })
-    })
+            if((availableTimeSlot.start_time >= selectedTimeSlot.start_time && availableTimeSlot.start_time < selectedTimeSlot.end_time || 
+                (availableTimeSlot.end_time>selectedTimeSlot.start_time && availableTimeSlot.end_time <selectedTimeSlot.end_time) )){
+                availableTimeSlot.selected = true;
+                continue;
+            } 
+        }   
+    }
     
-
     return groupByDay(availableTimeSlots);
 }
 

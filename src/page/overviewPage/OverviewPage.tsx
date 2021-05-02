@@ -30,47 +30,45 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
                     {(data: TimeSlotResponse[]) => (
                         <Grid>
                             <Grid.Row columns={data.length as SemanticWIDTHS}>
-                            {
+                            {data.map((company,i)=>(
+                                <Grid.Column key={`${company}-${i}`}>
+                                    <div className="box">{company.name}</div>
 
-                                data.map((company,i)=>(
-                                    <Grid.Column key={`${company}-${i}`}>
-                                        <div className="box">{company.name}</div>
+                                    <AvailableTimeSlot 
+                                        availableTimeSlot={!!this.state[company.id]? this.state[company.id]: []} 
+                                        header="Booked Times" 
+                                        isSelectable={false} 
+                                        isDeletable
+                                        onChange={(time: TimeSlotData)=>{
+                                            // remove selected time slot from booked slots
+                                            const filteredTimes = this.state[company.id].filter(
+                                                x=> x.start_time!==time.start_time && x.end_time !== time.end_time
+                                                );
+                                            this.setState({[company.id] : filteredTimes })
+                                        }}
+                                        />
+                                </Grid.Column>
+                            ))}
 
-                                        <AvailableTimeSlot 
-                                            availableTimeSlot={!!this.state[company.id]? this.state[company.id]: []} 
-                                            header="Booked Times" 
-                                            isSelectable={false} 
-                                            isDeletable
-                                            onChange={(time: TimeSlotData)=>{
-                                                // remove selected time slot from booked slots
-                                                const filteredTimes = this.state[company.id].filter(
-                                                    x=> x.start_time!==time.start_time && x.end_time !== time.end_time
-                                                    );
-                                                this.setState({[company.id] : filteredTimes })
-                                            }}
-                                            />
-                                    </Grid.Column>
-                                ))}
-
-                            {    data.map((company,i)=>(
-                                    <Grid.Column key={`${company}-${i}`}>
-                                        <AvailableTimeSlot 
-                                            availableTimeSlot={company.time_slots} 
-                                            header="Available Times" 
-                                            isSelectable 
-                                            isDeletable={false}
-                                            selectedItems={this.state}
-                                            onChange={(times: TimeSlotData)=>{
-                                                // add selected time slot to booked slots
-                                                if(this.state[company.id]){
-                                                    this.setState({[company.id] : [...this.state[company.id], times]});
-                                                }else {
-                                                    this.setState({[company.id]: [times]})
-                                                }
-                                            }}
-                                            />
-                                    </Grid.Column>
-                                ))
+                            {data.map((company,i)=>(
+                                <Grid.Column key={`${company}-${i}`}>
+                                    <AvailableTimeSlot 
+                                        availableTimeSlot={company.time_slots} 
+                                        header="Available Times" 
+                                        isSelectable 
+                                        isDeletable={false}
+                                        selectedItems={this.state}
+                                        onChange={(times: TimeSlotData)=>{
+                                            // add selected time slot to booked slots
+                                            if(this.state[company.id]){
+                                                this.setState({[company.id] : [...this.state[company.id], times]});
+                                            }else {
+                                                this.setState({[company.id]: [times]})
+                                            }
+                                        }}
+                                        />
+                                </Grid.Column>
+                            ))
                             }
                             </Grid.Row>
                         </Grid>

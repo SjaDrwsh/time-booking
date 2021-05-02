@@ -50,7 +50,6 @@ export class AvailableTimeSlot extends React.Component<AvailableTimeSlotProps, A
                                                     key={`${i}-segment`} 
                                                     onClick={()=> (
                                                         isSelectable && !time.selected? this.onClick(time) : {}
-                                                        
                                                     )}>
                                                     {isDeletable && (
                                                         <Icon name='remove circle' onClick={(e: any)=>{this.onClick(time)}}></Icon>
