@@ -31,28 +31,42 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
                         <Grid>
                             <Grid.Row columns={data.length as SemanticWIDTHS}>
                             {
+
                                 data.map((company,i)=>(
                                     <Grid.Column key={`${company}-${i}`}>
                                         <div className="box">{company.name}</div>
-                                        <div>{JSON.stringify(this.state[company.name])}</div>
+
                                         <AvailableTimeSlot 
-                                            availableTimeSlot={!!this.state[company.name]? this.state[company.name]: []} 
+                                            availableTimeSlot={!!this.state[company.id]? this.state[company.id]: []} 
                                             header="Booked Times" 
                                             isSelectable={false} 
                                             isDeletable
-                                            onChange={(times: TimeSlotData)=>{
-                                                console.log('Booked', times)
+                                            onChange={(time: TimeSlotData)=>{
+                                                // remove selected time slot from booked slots
+                                                const filteredTimes = this.state[company.id].filter(
+                                                    x=> x.start_time!==time.start_time && x.end_time !== time.end_time
+                                                    );
+                                                this.setState({[company.id] : filteredTimes })
                                             }}
                                             />
+                                    </Grid.Column>
+                                ))}
 
+                            {    data.map((company,i)=>(
+                                    <Grid.Column key={`${company}-${i}`}>
                                         <AvailableTimeSlot 
                                             availableTimeSlot={company.time_slots} 
                                             header="Available Times" 
                                             isSelectable 
                                             isDeletable={false}
+                                            selectedItems={this.state}
                                             onChange={(times: TimeSlotData)=>{
-                                                console.log('Available',times);
-                                                console.log( company.name, this.state[company.name])
+                                                // add selected time slot to booked slots
+                                                if(this.state[company.id]){
+                                                    this.setState({[company.id] : [...this.state[company.id], times]});
+                                                }else {
+                                                    this.setState({[company.id]: [times]})
+                                                }
                                             }}
                                             />
                                     </Grid.Column>

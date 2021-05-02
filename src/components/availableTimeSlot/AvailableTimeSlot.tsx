@@ -1,14 +1,15 @@
 import { TimeSlotData } from 'interfaces/response';
 import * as React from 'react';
 import { Grid, Icon, Segment } from 'semantic-ui-react';
-import { convertDateToReadableFormat, groupByDay, groupedDates } from 'util/dateUtil';
+import { convertDateToReadableFormat, groupedDates, mapSelectedTimeSlots, SelectedDates } from 'util/dateUtil';
 
 interface AvailableTimeSlotProps{
     availableTimeSlot: TimeSlotData[];
     header: string;
     isSelectable: boolean;
     isDeletable: boolean;
-    onChange: (selectedTime: TimeSlotData) => void
+    onChange: (selectedTime: TimeSlotData) => void;
+    selectedItems?: groupedDates;
 }
 
 interface AvailableTimeSlotState{
@@ -28,31 +29,33 @@ export class AvailableTimeSlot extends React.Component<AvailableTimeSlotProps, A
     }
 
     render(){
-        const { header, isSelectable, isDeletable, availableTimeSlot } = this.props;
-        const dates: groupedDates = groupByDay(availableTimeSlot);     
+        const { header, isSelectable, isDeletable, availableTimeSlot, selectedItems} = this.props;
+
+        const updatesDates = mapSelectedTimeSlots(availableTimeSlot, selectedItems);
 
         return (
             <div className="select-time-slot"> 
             <h5>{header}</h5>
                 <Segment.Group>
                     {
-                        Object.keys(dates).map((element, i) => {
+                        Object.keys(updatesDates).map((element, i) => {
                             return( 
-                                <Segment key={`${element}-${i}-segment`} >
+                                <Segment key={`${element}-segment`} >
                                         <p>{element}</p>
-                                    <Grid.Column key={`${element}-${i}`}>
-                                       {dates[element].map((time: TimeSlotData, i)=>(
-                                            <Grid.Row key={`${time}-${i}-row`}>
+                                    <Grid.Column key={`${i}-grid`}>
+                                       {updatesDates[element].map((time: SelectedDates, i)=>(
+                                            <Grid.Row key={`${i}-row`}>
                                                 <Segment 
-                                                    key={`${time}-${i}-segment`} 
+                                                  className={time.selected? 'disabled' : ''}
+                                                    key={`${i}-segment`} 
                                                     onClick={()=> (
-                                                        isSelectable? this.onClick(time) : {}
+                                                        isSelectable && !time.selected? this.onClick(time) : {}
                                                         
                                                     )}>
                                                     {isDeletable && (
-                                                        <Icon name='delete' onClick={(e: any)=>{this.onClick(e)}}></Icon>
+                                                        <Icon name='remove circle' onClick={(e: any)=>{this.onClick(time)}}></Icon>
                                                     )}
-                                                    <p key={`${time}-${i}-p`} >{convertDateToReadableFormat(time.start_time)} - {convertDateToReadableFormat(time.end_time)}</p>
+                                                    <p key={`${i}-p`} >{convertDateToReadableFormat(time.start_time)} - {convertDateToReadableFormat(time.end_time)}</p>
                                                 </Segment>
                                             </Grid.Row>
                                         )) 
@@ -62,6 +65,9 @@ export class AvailableTimeSlot extends React.Component<AvailableTimeSlotProps, A
                             )
                         })
                     }
+                    {Object.keys(updatesDates).length === 0 && (
+                        <p> no selected or available time slot</p>
+                    )}
                                                       
                 </Segment.Group>
             </div> 
@@ -70,7 +76,6 @@ export class AvailableTimeSlot extends React.Component<AvailableTimeSlotProps, A
     }
 
     public onClick(time: TimeSlotData): void{
-      //  this.setState({inputText: event.target.value, error: false, showOutput: false})
       this.props.onChange(time)
     }
 }
