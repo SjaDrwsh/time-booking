@@ -23,7 +23,6 @@ export function groupByDay(timeSlotsArray: SelectedDates[]): groupedDates{
     for (const iterator of timeSlotsArray) {
         const startDate = new Date(iterator.start_time);
          const date = startDate.getFullYear()+'-'+(startDate.getMonth()+1)+'-'+startDate.getDate();
-        console.log(startDate.getFullYear()+'-'+(startDate.getMonth()+1)+'-'+startDate.getDate())
         // check if day deos not exists added it days object then push time slots
         if(!daysObject[date]){
             daysObject[date] = [];
@@ -74,16 +73,17 @@ export function mapSelectedTimeSlots(availableTimeSlots: SelectedDates[], select
     const bookedTimeSlots = convertObjectIntoArray(selectedDates); 
  
     for (const availableTimeSlot of availableTimeSlots) {
+        // reset all first so that the delete functionality works
+        availableTimeSlot.selected = false;
         for (const selectedTimeSlot of bookedTimeSlots) {
             // eslint-disable-next-line
             if((availableTimeSlot.start_time >= selectedTimeSlot.start_time && availableTimeSlot.start_time < selectedTimeSlot.end_time || 
                 (availableTimeSlot.end_time>selectedTimeSlot.start_time && availableTimeSlot.end_time <selectedTimeSlot.end_time) )){
                 availableTimeSlot.selected = true;
-                continue;
             } 
-            availableTimeSlot.selected = false;
         }   
     }
+
     
     return groupByDay(availableTimeSlots);
 }

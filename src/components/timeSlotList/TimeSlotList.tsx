@@ -29,6 +29,7 @@ export class TimeSlotList extends React.Component<TimeSlotListProps, TimeSlotLis
     }
 
     render(){
+
         const { header, isSelectable, isDeletable, availableTimeSlot, selectedItems} = this.props;
 
         const updatesDates = mapSelectedTimeSlots(availableTimeSlot, selectedItems);

@@ -41,14 +41,12 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
                                         availableTimeSlot={!!this.state[company.id]? this.state[company.id]: []} 
                                         header="Booked Times" 
                                         isSelectable={false} 
-                                        isDeletable={false}
+                                        isDeletable
                                         onChange={(time: TimeSlotData)=>{
-                                            // I wanted to implement extra delete functionality but did not have time
+                                            // I wanted to implement delete functionality but did not have time
                                             // remove selected time slot from booked slots
-                                            const filteredTimes = this.state[company.id].filter(
-                                                x=> x.start_time!==time.start_time && x.end_time !== time.end_time
-                                                );
-                                            this.setState({[company.id] : filteredTimes })
+                                            this.setState({[company.id] : [] });
+                                            
                                         }}
                                         />
                                 </Grid.Column>
@@ -64,11 +62,8 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
                                         selectedItems={this.state}
                                         onChange={(times: TimeSlotData)=>{
                                             // add selected time slot to booked slots
-                                            if(this.state[company.id]){
-                                                this.setState({[company.id] : [...this.state[company.id], times]});
-                                            }else {
-                                                this.setState({[company.id]: [times]})
-                                            }
+                                            // only allow one reservation per company at once
+                                            this.setState({[company.id]: [times]})
                                         }}
                                         />
                                 </Grid.Column>
