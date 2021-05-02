@@ -2,6 +2,11 @@
 
 Allows users to choose a possible time slot for their company. Simple UI with added unit test for each component
 
+example for deselecting and deselecting time slot
+
+![time booking](https://user-images.githubusercontent.com/10211191/116818810-8b319700-ab6d-11eb-83c9-4db3c220f9b7.gif)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
