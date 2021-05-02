@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Grid, Icon, Segment } from 'semantic-ui-react';
 import { convertDateToReadableFormat, groupedDates, mapSelectedTimeSlots, SelectedDates } from 'util/dateUtil';
 
-interface AvailableTimeSlotProps{
+interface TimeSlotListProps{
     availableTimeSlot: TimeSlotData[];
     header: string;
     isSelectable: boolean;
@@ -12,14 +12,14 @@ interface AvailableTimeSlotProps{
     selectedItems?: groupedDates;
 }
 
-interface AvailableTimeSlotState{
+interface TimeSlotListState{
     selectedTimeSlot: TimeSlotData[];
 }
 
 
-export class AvailableTimeSlot extends React.Component<AvailableTimeSlotProps, AvailableTimeSlotState> {
+export class TimeSlotList extends React.Component<TimeSlotListProps, TimeSlotListState> {
 
-    constructor(props: AvailableTimeSlotProps){
+    constructor(props: TimeSlotListProps){
         super(props);
         this.state= {
             selectedTimeSlot: []

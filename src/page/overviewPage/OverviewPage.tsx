@@ -1,4 +1,4 @@
-import { AvailableTimeSlot } from 'components/availableTimeSlot/AvailableTimeSlot';
+import { TimeSlotList } from 'components/timeSlotList/TimeSlotList';
 import { TimeSlotData, TimeSlotResponse } from 'interfaces/response';
 import * as React from 'react';
 import { Grid, SemanticWIDTHS } from 'semantic-ui-react';
@@ -6,6 +6,9 @@ import { timeSlotApiService } from 'service/timeSlot/TimeSlotApiService';
 import { ReadApiStateContext } from 'state/ReadApiStateContext';
 
 interface OverviewPageState {
+    /** the key would be the company`s id this why its dynamic
+     * it contains an array of data
+     */
     [key:string]: TimeSlotData[];
 }
 
@@ -19,6 +22,7 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
         this.state= {}
     }
 
+    /** fetching the data from server on mount */
     componentDidMount(){
         this.getData();
     }
@@ -33,13 +37,13 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
                             {data.map((company,i)=>(
                                 <Grid.Column key={`${company}-${i}`}>
                                     <div className="box">{company.name}</div>
-
-                                    <AvailableTimeSlot 
+                                    <TimeSlotList 
                                         availableTimeSlot={!!this.state[company.id]? this.state[company.id]: []} 
                                         header="Booked Times" 
                                         isSelectable={false} 
-                                        isDeletable
+                                        isDeletable={false}
                                         onChange={(time: TimeSlotData)=>{
+                                            // I wanted to implement extra delete functionality but did not have time
                                             // remove selected time slot from booked slots
                                             const filteredTimes = this.state[company.id].filter(
                                                 x=> x.start_time!==time.start_time && x.end_time !== time.end_time
@@ -52,7 +56,7 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
 
                             {data.map((company,i)=>(
                                 <Grid.Column key={`${company}-${i}`}>
-                                    <AvailableTimeSlot 
+                                    <TimeSlotList 
                                         availableTimeSlot={company.time_slots} 
                                         header="Available Times" 
                                         isSelectable 
@@ -81,5 +85,4 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
     private getData(): void{
         timeSlotApiService.getTimeSlots.call();
     }
-
 }

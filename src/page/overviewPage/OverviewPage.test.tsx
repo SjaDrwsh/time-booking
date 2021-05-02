@@ -1,14 +1,7 @@
-import { mount } from 'enzyme';
-import React from 'react';
-import { OverviewPage } from './OverviewPage';
-
+// @ts-ignore
 describe('test OverviewPage', ()=> {
     test('renders div with class name OverviewPage', () => {
-  
-      }); 
-
-      test('renders ScooterParsing ', () => {
-
-      }); 
+      // If i had more time I would have added unit test to check that all renders how it should and all classes are applied 
+    }); 
 })
 
