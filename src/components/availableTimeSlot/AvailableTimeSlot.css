@@ -11,4 +11,24 @@
 .select-time-slot .row{
     margin: 1rem;
     cursor: pointer;
+    text-align: center;
+}
+
+.select-time-slot .row > div{
+    display: inline-grid;
+    width: -webkit-fill-available;
+}
+
+.select-time-slot .ui.disabled.segment {
+    background: repeating-linear-gradient( to right, #fff, #fff 8px, #9e9e9e 12px, #9e9e9e 13px);
+    color: black;
+}
+
+.select-time-slot .row > div i {
+    position: absolute;
+    padding: 1rem;
+}
+
+.select-time-slot > .ui.segments > p{
+    padding: 1rem;
 }
