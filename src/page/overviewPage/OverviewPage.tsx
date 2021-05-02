@@ -1,5 +1,4 @@
 import { AvailableTimeSlot } from 'components/availableTimeSlot/AvailableTimeSlot';
-import { SelectedTimeSlot } from 'components/selectedTimeSlot/SelectedTimeSlot';
 import { TimeSlotData, TimeSlotResponse } from 'interfaces/response';
 import * as React from 'react';
 import { Grid, SemanticWIDTHS } from 'semantic-ui-react';
@@ -24,8 +23,6 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
         this.getData();
     }
 
-
-
     render(): JSX.Element{
         return (
             <div className='overviewPage'>             
@@ -37,8 +34,27 @@ export class OverviewPage extends React.Component<OverviewPageProps, OverviewPag
                                 data.map((company,i)=>(
                                     <Grid.Column key={`${company}-${i}`}>
                                         <div className="box">{company.name}</div>
-                                        <SelectedTimeSlot selectedTimeSlot={!!this.state[company.name]? this.state[company.name]: []}></SelectedTimeSlot>
-                                        <AvailableTimeSlot availableTimeSlot={company.time_slots}></AvailableTimeSlot>
+                                        <div>{JSON.stringify(this.state[company.name])}</div>
+                                        <AvailableTimeSlot 
+                                            availableTimeSlot={!!this.state[company.name]? this.state[company.name]: []} 
+                                            header="Booked Times" 
+                                            isSelectable={false} 
+                                            isDeletable
+                                            onChange={(times: TimeSlotData)=>{
+                                                console.log('Booked', times)
+                                            }}
+                                            />
+
+                                        <AvailableTimeSlot 
+                                            availableTimeSlot={company.time_slots} 
+                                            header="Available Times" 
+                                            isSelectable 
+                                            isDeletable={false}
+                                            onChange={(times: TimeSlotData)=>{
+                                                console.log('Available',times);
+                                                console.log( company.name, this.state[company.name])
+                                            }}
+                                            />
                                     </Grid.Column>
                                 ))
                             }

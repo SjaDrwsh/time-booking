@@ -1,7 +1,14 @@
-.select-time-slot{
-    
+.select-time-slot .segments .column{
+    max-height: 23rem;
+    overflow-y: scroll;
+    padding: 0 1rem;
 }
 
 .select-time-slot h5{
+    margin: 1rem !important;
+}
+
+.select-time-slot .row{
     margin: 1rem;
+    cursor: pointer;
 }
