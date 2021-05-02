@@ -1,9 +1,6 @@
 import { TimeSlotData } from "interfaces/response";
 
-// array to map name of the day and sunday is day 0 
-export const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-
-// the key would be the day in number form and each object would contain the time slots available that day
+// the key would be the date and each object would contain the time slots available that day
 export interface groupedDates {
     [key: string]: SelectedDates[]
 }
@@ -14,7 +11,7 @@ export interface SelectedDates extends TimeSlotData{
 }
 
 /**
- * groups the array of time slots into days object and sorts the array of time
+ * groups the array of time slots into dates object and sorts the array of time
  * @param timeSlotsArray 
  * @returns groupedDates an object days containing an array of time slot for that day
  */
@@ -99,5 +96,4 @@ function convertObjectIntoArray(object: groupedDates): SelectedDates[]{
     })    
 
     return SelectedDatesArray;
-
 }
